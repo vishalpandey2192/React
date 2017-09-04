@@ -4,4 +4,4 @@ const SearchBar = () => {
     return <input />
 }
 
-export default SearchBar;
+export default SearchBar; changes()
