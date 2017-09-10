@@ -16,19 +16,34 @@ class App extends Component{
                       selectedVideo: null};
         //console.log(this.state);
 
-        YTSearch({key:API_KEY, term: 'surfboards'}, (videos) => {
+        // YTSearch({key:API_KEY, term: 'surfboards'}, (videos) => {
+        //
+        //     this.setState({videos: videos,
+        //                    selectedVideo: videos[0]});
+        //     console.log(videos);
+        // });
+
+        this.videoSearch('india')
+    }
+
+    videoSearch(term){
+        YTSearch({key:API_KEY, term: term}, (videos) => {
 
             this.setState({videos: videos,
-                           selectedVideo: videos[0]});
+                selectedVideo: videos[0]});
             console.log(videos);
         });
+
     }
 
 
 
     render(){
+
+
+        const videoSearch = _.debounce((term) => { this.videoSearch(term)}, 300);
         return (<div>
-            <SearchBar/>
+            <SearchBar onSearchTermChange={videoSearch}/>
             <VideoDetail video={this.state.selectedVideo}/>
             <VideoList videos={this.state.videos}
                         onVideoSelect = {selectedVideo => this.setState({selectedVideo})}/>
